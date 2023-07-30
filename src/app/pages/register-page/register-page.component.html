@@ -1,0 +1,60 @@
+<div class="container narrow">
+  <h1>Create an account</h1>
+
+  <form [formGroup]="registrationForm" (submit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Create a username</mat-label>
+      <input
+        matInput
+        [formControl]="username"
+        type="text"
+        autocomplete="username"
+      />
+      <mat-hint>Maximum length: {{ usernameMaxLength }} characters</mat-hint>
+      <mat-error>
+        <ng-container *ngIf="username.hasError('server'); else invalidUsername">
+          {{ serverValidationError }}
+        </ng-container>
+        <ng-template #invalidUsername>
+          A username of {{ usernameMaxLength }} or fewer characters is required.
+        </ng-template>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Create a password</mat-label>
+      <input
+        matInput
+        [formControl]="password"
+        type="password"
+        autocomplete="new-password"
+      />
+      <mat-hint>Minimum length: {{ passwordMinLength }} characters</mat-hint>
+      <mat-error>
+        <ng-container *ngIf="password.hasError('server'); else invalidPassword">
+          {{ serverValidationError }}
+        </ng-container>
+        <ng-template #invalidPassword>
+          A password of {{ passwordMinLength }} or more characters is required.
+        </ng-template>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Confirm your password</mat-label>
+      <input
+        matInput
+        [formControl]="passwordConfirmation"
+        type="password"
+        autocomplete="new-password"
+      />
+      <mat-error>Passwords must match.</mat-error>
+    </mat-form-field>
+
+    <input [formControl]="honeypot" type="hidden" />
+
+    <div>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </div>
+  </form>
+</div>

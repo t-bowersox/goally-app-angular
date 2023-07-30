@@ -1,0 +1,13 @@
+<a
+  *ngIf="link"
+  mat-list-item
+  [routerLink]="link"
+  routerLinkActive
+  [routerLinkActiveOptions]="{ exact: true }"
+  #activeLink="routerLinkActive"
+  [activated]="activeLink.isActive"
+  (click)="clicked.emit($event)"
+>
+  <mat-icon *ngIf="icon" matListItemIcon>{{ icon }}</mat-icon>
+  <ng-content></ng-content>
+</a>
