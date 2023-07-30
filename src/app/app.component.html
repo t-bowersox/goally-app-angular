@@ -40,32 +40,19 @@
       </button>
     </div>
     <mat-nav-list aria-labelledby="sidenav-title">
-      <a
-        mat-list-item
-        routerLink="/"
-        routerLinkActive
-        ariaCurrentWhenActive="page"
+      <app-menu-link
+        *ngFor="let menuLink of publicLinks"
+        [link]="menuLink.link"
+        [icon]="menuLink.icon"
+        (clicked)="sidenav.close()"
       >
-        Home
-      </a>
-      <a
-        mat-list-item
-        routerLink="/login"
-        routerLinkActive
-        ariaCurrentWhenActive="page"
-      >
-        Log In
-      </a>
-      <a
-        mat-list-item
-        routerLink="/register"
-        routerLinkActive
-        ariaCurrentWhenActive="page"
-      >
-        Sign Up
-      </a>
+        {{ menuLink.title }}
+      </app-menu-link>
       <mat-divider></mat-divider>
-      <a mat-list-item href="https://goally.app">The Goally Project</a>
+      <a mat-list-item href="https://goally.app">
+        <mat-icon matListItemIcon>info</mat-icon>
+        The Goally Project
+      </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
