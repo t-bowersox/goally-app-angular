@@ -1,0 +1,13 @@
+div {
+  position: absolute;
+  top: -250px;
+  left: 1rem;
+  z-index: 50;
+  padding: 1rem;
+  border-radius: 4px;
+  transition: top 300ms ease-out;
+}
+
+div:focus-within {
+  top: 5px;
+}

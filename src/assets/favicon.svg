@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <path style="fill: rgb(51, 51, 51); white-space: pre;"/>
+  <path style="fill: rgb(51, 51, 51); white-space: pre;"/>
+  <path style="fill: rgb(51, 51, 51); white-space: pre;"/>
+  <rect style="paint-order: fill; stroke: rgb(255, 255, 255); stroke-width: 2px; fill: rgb(13, 110, 253);" x="0" y="0" width="500" height="500" rx="50" ry="50" transform="matrix(1, 0, 0, 1, 0, -1.7763568394002505e-15)"/>
+  <text style="fill: rgb(255, 255, 255); font-family: system-ui; font-size: 500px; white-space: pre;" x="79.711" y="420.771" transform="matrix(1, 0, 0, 1, 0, -1.7763568394002505e-15)">G</text>
+</svg>

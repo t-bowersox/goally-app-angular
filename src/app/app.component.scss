@@ -1,0 +1,73 @@
+@use "@angular/material" as mat;
+
+/* 
+  Padding values correspond with Toolbar height
+  See: node_modules/@angular/material/toolbar/_toolbar-variables.scss
+*/
+:host {
+  --top-padding: 64px;
+
+  @media screen and (max-width: 599px) {
+    --top-padding: 56px;
+  }
+}
+
+/* Toolbar styles */
+
+mat-toolbar {
+  position: fixed;
+  top: 0;
+  z-index: 3;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Sidenav styles */
+
+mat-sidenav-container {
+  height: 100%;
+}
+
+mat-sidenav {
+  width: 300px;
+  padding-block: calc(var(--top-padding) + 1rem) 1rem;
+  padding-inline: 1rem;
+  @include mat.elevation(3);
+}
+
+.sidenav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#sidenav-title {
+  font-weight: 700;
+}
+
+.active {
+  color: var(--color-link) !important;
+}
+
+mat-sidenav-content {
+  padding-block-start: var(--top-padding);
+}
+
+main {
+  scroll-margin-top: calc(var(--top-padding) + 1rem);
+}
+
+/* Footer styles */
+
+footer {
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 1rem;
+  border-top: 1px solid var(--mat-divider-color);
+}
