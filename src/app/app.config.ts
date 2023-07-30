@@ -1,9 +1,24 @@
-import { ApplicationConfig } from '@angular/core';
+import {
+  ApplicationConfig,
+  EnvironmentProviders,
+  Provider,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 
+import {
+  provideAnimations,
+  provideNoopAnimations,
+} from '@angular/platform-browser/animations';
 import { routes } from './app.routes';
-import { provideAnimations } from '@angular/platform-browser/animations';
+
+const providers: (EnvironmentProviders | Provider)[] = [provideRouter(routes)];
+
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  providers.push(provideNoopAnimations());
+} else {
+  providers.push(provideAnimations());
+}
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideAnimations()]
+  providers,
 };

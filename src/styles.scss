@@ -1,7 +1,6 @@
-
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -12,28 +11,129 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$goally-app-angular-primary: mat.define-palette(mat.$indigo-palette);
-$goally-app-angular-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$light-primary: mat.define-palette(mat.$blue-palette, 700, 300, 900);
+$light-accent: mat.define-palette(mat.$grey-palette, 600, 200, 800);
+
+$dark-primary: mat.define-palette(mat.$blue-palette, 300, 50, 700);
+$dark-accent: mat.define-palette(mat.$grey-palette, 300, 50, 700);
 
 // The warn palette is optional (defaults to red).
-$goally-app-angular-warn: mat.define-palette(mat.$red-palette);
+$light-warn: mat.define-palette(mat.$red-palette, 700, 300, 900);
+$dark-warn: mat.define-palette(mat.$red-palette, 300, 50, 700);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$goally-app-angular-theme: mat.define-light-theme((
-  color: (
-    primary: $goally-app-angular-primary,
-    accent: $goally-app-angular-accent,
-    warn: $goally-app-angular-warn,
+$light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $light-primary,
+      accent: $light-accent,
+      warn: $light-warn,
+    ),
   )
-));
+);
+$dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $dark-primary,
+      accent: $dark-accent,
+      warn: $dark-warn,
+    ),
+  )
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include mat.all-component-themes($goally-app-angular-theme);
+
+// Keep file size down: only include CSS for the components we're using.
+// See theme modules: node_modules/@angular/material/_index.scss
+// Instead of: @include mat.all-component-themes($light-theme);
+@include mat.core-theme($light-theme);
+@include mat.ripple-theme($light-theme);
+@include mat.button-theme($light-theme);
+@include mat.divider-theme($light-theme);
+@include mat.icon-theme($light-theme);
+@include mat.icon-button-theme($light-theme);
+@include mat.list-theme($light-theme);
+@include mat.sidenav-theme($light-theme);
+@include mat.toolbar-theme($light-theme);
+
+@media screen and (prefers-color-scheme: dark) {
+  @include mat.core-color($dark-theme);
+  @include mat.ripple-color($dark-theme);
+  @include mat.button-color($dark-theme);
+  @include mat.divider-color($dark-theme);
+  @include mat.icon-color($dark-theme);
+  @include mat.icon-button-color($dark-theme);
+  @include mat.list-color($dark-theme);
+  @include mat.sidenav-color($dark-theme);
+}
 
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: light dark;
+
+  --color-link: #{mat.get-color-from-palette($light-primary, 800)};
+
+  @media screen and (prefers-color-scheme: dark) {
+    --color-link: #{mat.get-color-from-palette($dark-primary, 200)};
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+a {
+  color: var(--color-link);
+
+  &.mdc-button {
+    text-decoration: none;
+  }
+}
+
+/* Classes */
+
+// See https://m2.material.io/design/layout/responsive-layout-grid.html#breakpoints
+.container {
+  margin-inline: 16px;
+
+  @media screen and (min-wdith: 600px) {
+    margin-inline: 32px;
+  }
+
+  @media screen and (min-width: 905px) {
+    margin-inline: auto;
+    width: 840px;
+  }
+
+  @media screen and (min-width: 1240px) {
+    margin-line: 200px;
+  }
+
+  @media screen and (min-width: 1440px) {
+    margin-inline: auto;
+    width: 1040px;
+  }
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  .safe-motion {
+    animation: none !important;
+    transition: none !important;
+  }
+}
