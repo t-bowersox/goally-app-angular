@@ -1,0 +1,33 @@
+<div class="container narrow">
+  <h1>Log in</h1>
+
+  <form [formGroup]="loginForm" (submit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input
+        matInput
+        [formControl]="username"
+        type="text"
+        autocomplete="username"
+      />
+      <mat-error>A username is required.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        [formControl]="password"
+        type="password"
+        autocomplete="current-password"
+      />
+      <mat-error>A password is required.</mat-error>
+    </mat-form-field>
+
+    <input [formControl]="honeypot" type="hidden" />
+
+    <div>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </div>
+  </form>
+</div>

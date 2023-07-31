@@ -14,9 +14,16 @@
   </div>
 
   <div class="toolbar-group toolbar-right">
-    <a mat-icon-button routerLink="/login" aria-label="Log in">
-      <mat-icon>login</mat-icon>
-    </a>
+    <ng-container *ngIf="currentUser | async; else publicActions">
+      <a mat-icon-button routerlink="/logout" aria-label="Log out">
+        <mat-icon>logout</mat-icon>
+      </a>
+    </ng-container>
+    <ng-template #publicActions>
+      <a mat-icon-button routerLink="/login" aria-label="Log in">
+        <mat-icon>login</mat-icon>
+      </a>
+    </ng-template>
   </div>
 </mat-toolbar>
 
@@ -41,7 +48,7 @@
     </div>
     <mat-nav-list aria-labelledby="sidenav-title">
       <app-menu-link
-        *ngFor="let menuLink of publicLinks"
+        *ngFor="let menuLink of menuLinks"
         [link]="menuLink.link"
         [icon]="menuLink.icon"
         (clicked)="sidenav.close()"

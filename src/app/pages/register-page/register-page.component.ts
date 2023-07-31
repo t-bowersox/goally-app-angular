@@ -76,6 +76,10 @@ export class RegisterPageComponent {
     this.registrationForm.markAllAsTouched();
 
     if (this.registrationForm.invalid) {
+      if (this.honeypot.invalid) {
+        this._matSnackBar.open('Nice try, robot.');
+      }
+
       return;
     }
 
@@ -104,7 +108,10 @@ export class RegisterPageComponent {
             const invalidControl = this.registrationForm.get(apiError.name);
             invalidControl?.setErrors({ server: true });
           } else {
-            this._matSnackBar.open(apiError.reason, 'OK');
+            this._matSnackBar.open(
+              'Sorry, something went wrong. Please refresh the page and try again.',
+              'OK',
+            );
           }
         },
       });
