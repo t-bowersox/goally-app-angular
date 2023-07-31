@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { User } from '../app.types';
 import { API_CONFIG, ApiConfig } from '../providers/api.config';
 import { ApiService } from './api.service';
 
@@ -7,7 +8,12 @@ import { ApiService } from './api.service';
   providedIn: 'root',
 })
 export class UserService {
+  private _currentUser = new BehaviorSubject<User | null>(null);
   private readonly _endpoint: string;
+
+  public get currentUser(): Observable<User | null> {
+    return this._currentUser.asObservable();
+  }
 
   constructor(
     @Inject(API_CONFIG) apiConfig: ApiConfig,
@@ -26,5 +32,11 @@ export class UserService {
       password,
       passwordConfirmation,
     });
+  }
+
+  public setCurrentUser(): Observable<User | null> {
+    return this._apiService
+      .get<User | null>(this._endpoint)
+      .pipe(tap((user) => this._currentUser.next(user)));
   }
 }
