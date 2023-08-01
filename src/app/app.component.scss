@@ -70,4 +70,7 @@ footer {
   text-align: center;
   padding: 1rem;
   border-top: 1px solid var(--mat-divider-color);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }

@@ -1,15 +1,23 @@
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import {
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+} from '@angular/router';
 import { Observable } from 'rxjs';
 import { User } from './app.types';
 import { MenuLinkComponent } from './components/menu-link/menu-link.component';
 import { SkipLinkComponent } from './components/skip-link/skip-link.component';
+import { AuthService } from './services/auth.service';
 import { CsrfService } from './services/csrf.service';
 import { UserService } from './services/user.service';
 
@@ -30,13 +38,13 @@ import { UserService } from './services/user.service';
     RouterLinkActive,
     SkipLinkComponent,
     MenuLinkComponent,
+    MatSnackBarModule,
   ],
 })
 export class AppComponent {
   private _authenticatedLinks: MenuLink[] = [
     { link: '/list', title: 'Your List', icon: 'list' },
     { link: '/settings', title: 'Account Settings', icon: 'settings' },
-    { link: '/logout', title: 'Log Out', icon: 'logout' },
   ];
   private _publicLinks: MenuLink[] = [
     { link: '/', title: 'Home', icon: 'home' },
@@ -48,6 +56,9 @@ export class AppComponent {
   protected menuLinks: MenuLink[] = this._publicLinks;
 
   constructor(
+    private readonly _authService: AuthService,
+    private readonly _matSnackBar: MatSnackBar,
+    private readonly _router: Router,
     csrfService: CsrfService,
     iconRegistry: MatIconRegistry,
     userService: UserService,
@@ -58,6 +69,28 @@ export class AppComponent {
     this.currentUser = userService.currentUser;
     this.currentUser.subscribe((user) => {
       this.menuLinks = user ? this._authenticatedLinks : this._publicLinks;
+    });
+  }
+
+  protected handleLogout(sidenav?: MatSidenav): void {
+    sidenav?.close();
+
+    this._authService.logout().subscribe({
+      next: async () => {
+        await this._router.navigateByUrl('/login');
+      },
+      error: async (err: HttpErrorResponse) => {
+        if (err.status === 401) {
+          // Session is cleared in this case
+          await this._router.navigateByUrl('/login');
+          return;
+        }
+
+        this._matSnackBar.open(
+          'Sorry, something went wrong. Please refresh the page and try again.',
+          'OK',
+        );
+      },
     });
   }
 }
