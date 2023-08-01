@@ -8,12 +8,14 @@ import { ApiService } from './api.service';
 })
 export class AuthService {
   private readonly _loginEndpoint: string;
+  private readonly _logoutEndpoint: string;
 
   constructor(
     private readonly _apiService: ApiService,
     @Inject(API_CONFIG) apiConfig: ApiConfig,
   ) {
     this._loginEndpoint = apiConfig.endpoints.login;
+    this._logoutEndpoint = apiConfig.endpoints.logout;
   }
 
   public login(username: string, password: string): Observable<boolean> {
@@ -21,5 +23,9 @@ export class AuthService {
       username,
       password,
     });
+  }
+
+  public logout(): Observable<boolean> {
+    return this._apiService.get<boolean>(this._logoutEndpoint);
   }
 }

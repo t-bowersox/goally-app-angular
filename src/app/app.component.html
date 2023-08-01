@@ -15,9 +15,15 @@
 
   <div class="toolbar-group toolbar-right">
     <ng-container *ngIf="currentUser | async; else publicActions">
-      <a mat-icon-button routerlink="/logout" aria-label="Log out">
+      <button
+        mat-icon-button
+        routerlink="/logout"
+        type="button"
+        aria-label="Log out"
+        (click)="handleLogout()"
+      >
         <mat-icon>logout</mat-icon>
-      </a>
+      </button>
     </ng-container>
     <ng-template #publicActions>
       <a mat-icon-button routerLink="/login" aria-label="Log in">
@@ -46,6 +52,9 @@
         <mat-icon>close</mat-icon>
       </button>
     </div>
+    <div *ngIf="currentUser | async">
+      Signed in as {{ (currentUser | async)?.username }}
+    </div>
     <mat-nav-list aria-labelledby="sidenav-title">
       <app-menu-link
         *ngFor="let menuLink of menuLinks"
@@ -55,12 +64,16 @@
       >
         {{ menuLink.title }}
       </app-menu-link>
-      <mat-divider></mat-divider>
-      <a mat-list-item href="https://goally.app">
-        <mat-icon matListItemIcon>info</mat-icon>
-        The Goally Project
-      </a>
     </mat-nav-list>
+    <ng-container *ngIf="currentUser | async">
+      <mat-divider></mat-divider>
+      <mat-action-list>
+        <button mat-list-item (click)="handleLogout(sidenav)" type="button">
+          <mat-icon matListItemIcon>logout</mat-icon>
+          Log Out
+        </button>
+      </mat-action-list>
+    </ng-container>
   </mat-sidenav>
   <mat-sidenav-content>
     <main id="main" tabindex="-1">
@@ -68,6 +81,12 @@
     </main>
     <footer>
       <div>&copy; 2023 Tim Bowersox.</div>
+      <div>
+        Part of <a href="https://goally.app">The Goally Project</a> |
+        <a href="https://github.com/t-bowersox/goally-app-angular">
+          View source code
+        </a>
+      </div>
     </footer>
   </mat-sidenav-content>
 </mat-sidenav-container>
