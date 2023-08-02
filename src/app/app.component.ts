@@ -43,13 +43,13 @@ import { UserService } from './services/user.service';
 })
 export class AppComponent {
   private _authenticatedLinks: MenuLink[] = [
-    { link: '/list', title: 'Your List', icon: 'list' },
-    { link: '/settings', title: 'Account Settings', icon: 'settings' },
+    { link: '/list', title: 'Your list', icon: 'list' },
+    { link: '/settings', title: 'Account settings', icon: 'settings' },
   ];
   private _publicLinks: MenuLink[] = [
     { link: '/', title: 'Home', icon: 'home' },
-    { link: '/login', title: 'Log In', icon: 'login' },
-    { link: '/register', title: 'Sign Up', icon: 'person_add' },
+    { link: '/login', title: 'Log in', icon: 'login' },
+    { link: '/register', title: 'Sign up', icon: 'person_add' },
   ];
 
   protected currentUser: Observable<User | null>;

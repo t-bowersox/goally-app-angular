@@ -1,0 +1,144 @@
+<div class="container">
+  <h1>Account settings</h1>
+
+  <mat-tab-group dynamicHeight>
+    <mat-tab label="Username">
+      <h2>Change your username</h2>
+      <form
+        [formGroup]="usernameForm"
+        (submit)="saveUsername()"
+        #usernameFormEl
+      >
+        <mat-form-field>
+          <mat-label>Username</mat-label>
+          <input
+            matInput
+            formControlName="username"
+            type="text"
+            autocomplete="username"
+          />
+          <mat-hint>
+            Maximum length: {{ usernameMaxLength }} characters
+          </mat-hint>
+          <mat-error>
+            <ng-container
+              *ngIf="username?.hasError('server'); else invalidUsername"
+            >
+              {{ usernameValidationError }}
+            </ng-container>
+            <ng-template #invalidUsername>
+              A username of {{ usernameMaxLength }} or fewer characters is
+              required.
+            </ng-template>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Confirm your password</mat-label>
+          <input
+            matInput
+            formControlName="currentPassword"
+            type="password"
+            autocomplete="current-password"
+          />
+          <mat-error>
+            <ng-container
+              *ngIf="
+                usernameForm.get('currentPassword')?.hasError('server');
+                else passwordRequired
+              "
+            >
+              Current password is invalid.
+            </ng-container>
+            <ng-template #passwordRequired>
+              Current password is required.
+            </ng-template>
+          </mat-error>
+        </mat-form-field>
+
+        <div class="buttons">
+          <button mat-raised-button color="primary" type="submit">Save</button>
+          <button
+            mat-raised-button
+            color="accent"
+            type="reset"
+            (click)="restoreUsername()"
+          >
+            Reset
+          </button>
+        </div>
+      </form>
+    </mat-tab>
+    <mat-tab label="Password">
+      <h2>Change your password</h2>
+      <form
+        [formGroup]="passwordForm"
+        (submit)="savePassword()"
+        #passwordFormEl
+      >
+        <mat-form-field>
+          <mat-label>Current password</mat-label>
+          <input
+            matInput
+            formControlName="currentPassword"
+            type="password"
+            autocomplete="current-password"
+          />
+          <mat-error>
+            <ng-container
+              *ngIf="
+                passwordForm.get('currentPassword')?.hasError('server');
+                else passwordRequired
+              "
+            >
+              Current password is invalid.
+            </ng-container>
+            <ng-template #passwordRequired>
+              Current password is required.
+            </ng-template>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Create a new password</mat-label>
+          <input
+            matInput
+            formControlName="newPassword"
+            type="password"
+            autocomplete="new-password"
+          />
+          <mat-hint>
+            Minimum length: {{ passwordMinLength }} characters
+          </mat-hint>
+          <mat-error>
+            <ng-container
+              *ngIf="newPassword?.hasError('server'); else invalidPassword"
+            >
+              {{ passwordValidationError }}
+            </ng-container>
+            <ng-template #invalidPassword>
+              A password of {{ passwordMinLength }} or more characters is
+              required.
+            </ng-template>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Confirm your new password</mat-label>
+          <input
+            matInput
+            formControlName="newPasswordConfirmation"
+            type="password"
+            autocomplete="new-password"
+          />
+          <mat-error>Passwords must match.</mat-error>
+        </mat-form-field>
+
+        <div class="buttons">
+          <button mat-raised-button color="primary" type="submit">Save</button>
+          <button mat-raised-button color="accent" type="reset">Reset</button>
+        </div>
+      </form>
+    </mat-tab>
+  </mat-tab-group>
+</div>
