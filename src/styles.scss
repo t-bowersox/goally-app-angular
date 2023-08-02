@@ -63,6 +63,7 @@ $dark-theme: mat.define-dark-theme(
 @include mat.list-theme($light-theme);
 @include mat.sidenav-theme($light-theme);
 @include mat.snack-bar-theme($light-theme);
+@include mat.tabs-theme($light-theme);
 @include mat.toolbar-theme($light-theme);
 
 @media screen and (prefers-color-scheme: dark) {
@@ -77,6 +78,7 @@ $dark-theme: mat.define-dark-theme(
   @include mat.list-color($dark-theme);
   @include mat.sidenav-color($dark-theme);
   @include mat.snack-bar-color($dark-theme);
+  @include mat.tabs-color($dark-theme);
 }
 
 /* You can add global styles to this file, and also import other style files */

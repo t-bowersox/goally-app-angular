@@ -39,4 +39,32 @@ export class UserService {
       .get<User | null>(this._endpoint)
       .pipe(tap((user) => this._currentUser.next(user)));
   }
+
+  public updateUsername(
+    username: string,
+    currentPassword: string,
+  ): Observable<boolean> {
+    return this._apiService
+      .put<boolean>(this._endpoint, { username, currentPassword })
+      .pipe(
+        tap((updated) => {
+          if (updated) {
+            // Refresh user to reflect new username
+            this.setCurrentUser().subscribe();
+          }
+        }),
+      );
+  }
+
+  public updatePassword(
+    currentPassword: string,
+    newPassword: string,
+    newPasswordConfirmation: string,
+  ): Observable<boolean> {
+    return this._apiService.put<boolean>(this._endpoint, {
+      currentPassword,
+      newPassword,
+      newPasswordConfirmation,
+    });
+  }
 }
