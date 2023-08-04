@@ -1,4 +1,9 @@
-<div *ngIf="goalState" [ngSwitch]="mode" class="goal">
+<div
+  *ngIf="goalState"
+  [ngSwitch]="mode"
+  class="goal"
+  [class.read-mode]="mode === 'read'"
+>
   <ng-container *ngSwitchCase="'read'">
     <mat-checkbox
       id="goal-{{ goalState.id }}"

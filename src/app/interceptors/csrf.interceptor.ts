@@ -1,13 +1,20 @@
 import { HttpEvent, HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
 import { Observable } from 'rxjs';
+import { API_CONFIG } from '../providers/api.config';
 
 export const csrfInterceptor: HttpInterceptorFn = (
   request,
   next,
 ): Observable<HttpEvent<unknown>> => {
+  const apiConfig = inject(API_CONFIG);
+  const apiHost = apiConfig.host;
   const protectedMethods = ['post', 'put', 'patch', 'delete'];
 
-  if (!protectedMethods.includes(request.method.toLowerCase())) {
+  if (
+    !protectedMethods.includes(request.method.toLowerCase()) ||
+    !request.url.startsWith(apiHost)
+  ) {
     return next(request);
   }
 
