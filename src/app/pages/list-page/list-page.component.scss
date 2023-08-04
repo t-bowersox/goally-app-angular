@@ -1,0 +1,11 @@
+button[mat-fab] {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 2;
+}
+
+mat-divider,
+mat-expansion-panel {
+  margin-block: 1rem;
+}
