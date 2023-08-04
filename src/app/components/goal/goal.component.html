@@ -1,0 +1,98 @@
+<div *ngIf="goalState" [ngSwitch]="mode" class="goal">
+  <ng-container *ngSwitchCase="'read'">
+    <mat-checkbox
+      id="goal-{{ goalState.id }}"
+      [checked]="goalState.accomplished"
+      (change)="toggleAccomplished($event)"
+      [disabled]="isBusy"
+    >
+      {{ goalState.description }}
+    </mat-checkbox>
+    <button
+      mat-icon-button
+      [mat-menu-trigger-for]="options"
+      type="button"
+      aria-label="View options menu"
+      [disabled]="isBusy"
+    >
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #options>
+      <button
+        mat-menu-item
+        type="button"
+        [disabled]="isBusy"
+        (click)="mode = 'update'"
+      >
+        <mat-icon>edit</mat-icon>
+        <span>Edit goal</span>
+      </button>
+      <button
+        mat-menu-item
+        type="button"
+        [disabled]="isBusy"
+        (click)="mode = 'delete'"
+      >
+        <mat-icon>delete</mat-icon>
+        <span>Delete goal</span>
+      </button>
+    </mat-menu>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'delete'">
+    <strong role="alert">
+      Are you sure you want to delete "{{ goalState.description }}"?
+    </strong>
+    <div class="buttons">
+      <button
+        mat-stroked-button
+        type="button"
+        [disabled]="isBusy"
+        (click)="mode = 'read'"
+      >
+        Cancel
+      </button>
+      <button
+        mat-flat-button
+        color="warn"
+        type="button"
+        [disabled]="isBusy"
+        (click)="deleteGoal()"
+      >
+        Delete
+      </button>
+    </div>
+  </ng-container>
+
+  <ng-container *ngSwitchDefault>
+    <form
+      [formGroup]="editorForm"
+      (submit)="mode === 'create' ? createGoal() : updateGoal()"
+    >
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <input matInput type="text" formControlName="description" />
+        <mat-hint>What do you want to accomplish?</mat-hint>
+        <mat-error>A description is required.</mat-error>
+      </mat-form-field>
+      <div class="buttons">
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          [disabled]="isBusy"
+        >
+          Save
+        </button>
+        <button
+          mat-stroked-button
+          type="button"
+          [disabled]="isBusy"
+          (click)="cancelUpdate()"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </ng-container>
+</div>

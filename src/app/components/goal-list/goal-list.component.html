@@ -1,0 +1,23 @@
+<p *ngIf="!goals?.length && mode !== 'add'; else list">Your list is empty.</p>
+
+<ng-template #list>
+  <ul>
+    <app-goal
+      *ngFor="let goal of goals"
+      [goal]="goal"
+      (updated)="onGoalUpdated($event)"
+      (updateCancelled)="onUpdateCancelled()"
+      (deleted)="goalDeleted.emit($event)"
+      role="listitem"
+    ></app-goal>
+    <app-goal
+      *ngIf="mode === 'add'"
+      appScrollIntoView
+      [goal]="newGoal"
+      mode="create"
+      (updateCancelled)="onUpdateCancelled()"
+      (updated)="onGoalUpdated($event)"
+      role="listitem"
+    ></app-goal>
+  </ul>
+</ng-template>
