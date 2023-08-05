@@ -75,11 +75,26 @@ export class LoginPageComponent {
         await this._router.navigateByUrl(this._target);
       },
       error: (err: HttpErrorResponse) => {
-        const message =
-          err.status === 401
-            ? 'No account matches those credentials'
-            : 'Sorry, something went wrong. Please refresh the page and try again.';
-        this._matSnackBar.open(message, 'OK');
+        switch (err.status) {
+          case 401:
+            this._matSnackBar.open(
+              'No account matches those credentials',
+              'OK',
+            );
+            break;
+          case 429:
+            this._matSnackBar.open(
+              'Too many login attempts. Please wait several minutes and try again.',
+              'OK',
+            );
+            break;
+          default:
+            this._matSnackBar.open(
+              'Sorry, something went wrong. Please refresh the page and try again.',
+              'OK',
+            );
+        }
+
         this._resetForm();
       },
     });
