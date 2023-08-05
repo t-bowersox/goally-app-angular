@@ -12,6 +12,7 @@ import { BehaviorSubject, Observable, map } from 'rxjs';
 import { Goal } from 'src/app/app.types';
 import { GoalsService } from 'src/app/services/goals.service';
 import { GoalListComponent } from '../../components/goal-list/goal-list.component';
+import { SpinnerComponent } from '../../components/spinner/spinner.component';
 
 @Component({
   selector: 'app-list-page',
@@ -26,10 +27,13 @@ import { GoalListComponent } from '../../components/goal-list/goal-list.componen
     MatListModule,
     GoalListComponent,
     MatExpansionModule,
+    SpinnerComponent,
   ],
 })
 export class ListPageComponent {
   private _goals = new BehaviorSubject<Goal[]>([]);
+
+  protected isLoading = true;
 
   protected get goalsInProgress(): Observable<Goal[]> {
     return this._goals.pipe(
@@ -59,8 +63,10 @@ export class ListPageComponent {
     this._goalsService.getGoalsForUser().subscribe({
       next: (goals) => {
         this._goals.next(goals);
+        this.isLoading = false;
       },
       error: async (err: HttpErrorResponse) => {
+        this.isLoading = false;
         switch (err.status) {
           case 401:
             await this._router.navigateByUrl('/login');
