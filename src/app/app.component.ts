@@ -7,6 +7,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import {
   NavigationEnd,
   NavigationStart,
@@ -43,6 +44,7 @@ import { UserService } from './services/user.service';
     MenuLinkComponent,
     MatSnackBarModule,
     SpinnerComponent,
+    MatTooltipModule,
   ],
 })
 export class AppComponent {
