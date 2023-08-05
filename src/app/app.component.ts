@@ -8,15 +8,18 @@ import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {
+  NavigationEnd,
+  NavigationStart,
   Router,
   RouterLink,
   RouterLinkActive,
   RouterOutlet,
 } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, debounceTime } from 'rxjs';
 import { User } from './app.types';
 import { MenuLinkComponent } from './components/menu-link/menu-link.component';
 import { SkipLinkComponent } from './components/skip-link/skip-link.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 import { AuthService } from './services/auth.service';
 import { CsrfService } from './services/csrf.service';
 import { UserService } from './services/user.service';
@@ -39,6 +42,7 @@ import { UserService } from './services/user.service';
     SkipLinkComponent,
     MenuLinkComponent,
     MatSnackBarModule,
+    SpinnerComponent,
   ],
 })
 export class AppComponent {
@@ -52,6 +56,7 @@ export class AppComponent {
     { link: '/register', title: 'Sign up', icon: 'person_add' },
   ];
 
+  protected isNavigating = true;
   protected currentUser: Observable<User | null>;
   protected menuLinks: MenuLink[] = this._publicLinks;
 
@@ -69,6 +74,17 @@ export class AppComponent {
     this.currentUser = userService.currentUser;
     this.currentUser.subscribe((user) => {
       this.menuLinks = user ? this._authenticatedLinks : this._publicLinks;
+    });
+
+    this._router.events.pipe(debounceTime(200)).subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this.isNavigating = true;
+        return;
+      }
+
+      if (event instanceof NavigationEnd) {
+        this.isNavigating = false;
+      }
     });
   }
 

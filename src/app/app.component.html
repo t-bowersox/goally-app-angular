@@ -77,7 +77,10 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <main id="main" tabindex="-1">
-      <router-outlet></router-outlet>
+      <app-spinner *ngIf="isNavigating; else content"></app-spinner>
+      <ng-template #content>
+        <router-outlet></router-outlet>
+      </ng-template>
     </main>
     <footer>
       <div>&copy; 2023 Tim Bowersox.</div>
