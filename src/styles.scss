@@ -65,6 +65,7 @@ $dark-theme: mat.define-dark-theme(
 @include mat.input-theme($light-theme);
 @include mat.list-theme($light-theme);
 @include mat.menu-theme($light-theme);
+@include mat.progress-spinner-theme($light-theme);
 @include mat.sidenav-theme($light-theme);
 @include mat.snack-bar-theme($light-theme);
 @include mat.tabs-theme($light-theme);
@@ -85,6 +86,7 @@ $dark-theme: mat.define-dark-theme(
   @include mat.input-color($dark-theme);
   @include mat.list-color($dark-theme);
   @include mat.menu-color($dark-theme);
+  @include mat.progress-spinner-color($dark-theme);
   @include mat.sidenav-color($dark-theme);
   @include mat.snack-bar-color($dark-theme);
   @include mat.tabs-color($dark-theme);

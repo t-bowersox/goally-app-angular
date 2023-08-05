@@ -1,37 +1,40 @@
-<div class="container">
-  <h1>Your list</h1>
+<app-spinner *ngIf="isLoading; else content"></app-spinner>
+<ng-template #content>
+  <div class="container">
+    <h1>Your list</h1>
 
-  <h2>In progress</h2>
+    <h2>In progress</h2>
 
-  <app-goal-list
-    [goals]="goalsInProgress | async"
-    #inProgressList
-    (goalUpdated)="refreshGoals()"
-    (goalDeleted)="refreshGoals()"
-  ></app-goal-list>
+    <app-goal-list
+      [goals]="goalsInProgress | async"
+      #inProgressList
+      (goalUpdated)="refreshGoals()"
+      (goalDeleted)="refreshGoals()"
+    ></app-goal-list>
 
-  <button
-    mat-fab
-    matTooltip="Set a new goal"
-    color="primary"
-    type="button"
-    (click)="inProgressList.mode = 'add'"
-    [disabled]="inProgressList.mode === 'add'"
-  >
-    <mat-icon>add</mat-icon>
-  </button>
+    <button
+      mat-fab
+      matTooltip="Set a new goal"
+      color="primary"
+      type="button"
+      (click)="inProgressList.mode = 'add'"
+      [disabled]="inProgressList.mode === 'add'"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
 
-  <ng-container *ngIf="(goalsAccomplished | async)?.length">
-    <mat-divider></mat-divider>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title><h2>Accomplished</h2></mat-panel-title>
-      </mat-expansion-panel-header>
-      <app-goal-list
-        [goals]="goalsAccomplished | async"
-        (goalUpdated)="refreshGoals()"
-        (goalDeleted)="refreshGoals()"
-      ></app-goal-list>
-    </mat-expansion-panel>
-  </ng-container>
-</div>
+    <ng-container *ngIf="(goalsAccomplished | async)?.length">
+      <mat-divider></mat-divider>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title><h2>Accomplished</h2></mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-goal-list
+          [goals]="goalsAccomplished | async"
+          (goalUpdated)="refreshGoals()"
+          (goalDeleted)="refreshGoals()"
+        ></app-goal-list>
+      </mat-expansion-panel>
+    </ng-container>
+  </div>
+</ng-template>
