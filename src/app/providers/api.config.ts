@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 
 export const API_CONFIG = new InjectionToken<ApiConfig>('api.config');
 
