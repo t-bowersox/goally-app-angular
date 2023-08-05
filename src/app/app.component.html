@@ -21,12 +21,18 @@
         type="button"
         aria-label="Log out"
         (click)="handleLogout()"
+        matTooltip="Log out"
       >
         <mat-icon>logout</mat-icon>
       </button>
     </ng-container>
     <ng-template #publicActions>
-      <a mat-icon-button routerLink="/login" aria-label="Log in">
+      <a
+        mat-icon-button
+        routerLink="/login"
+        aria-label="Log in"
+        matTooltip="Log in"
+      >
         <mat-icon>login</mat-icon>
       </a>
     </ng-template>
